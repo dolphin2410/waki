@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자리 바꾸기</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            background-color: rgba(226, 248, 229, 0.822);
+            min-width: 700px;
+        }
+
+        .seat-composition {
+            width: 70vw;
+            height: 40vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr 1fr 1fr;
+            min-width: 500px;  
+        }
+
+        .column {
+            box-shadow: none;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgb(138, 96, 59);
+            color: white;
+            cursor: pointer;
+        }
+
+        .column:hover:not(:first-child) {
+            transform: scale(1.1)
+        }
+
+        .main_table {
+            padding: 10px 40px;
+            margin-bottom: 30px;
+            background-color:rgb(64, 39, 17);
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <button class="column main_table" onclick="shuffle()">교탁 (SHUFFLE)</button>
+    <div class="seat-composition"></div>
+    <script>
+        function initialize() {
+            let container = document.querySelector(".seat-composition")
+
+            for (let i = 0; i < 20; i++) {
+                div = document.createElement("div")
+                div.classList.add("column")
+                container.appendChild(div)
+            }
+        }
+
+        function shuffle() {
+            let class_group = document.querySelectorAll(".seat-composition > .column")
+
+            const params = new Proxy(new URLSearchParams(window.location.search), {
+                get: (searchParams, prop) => searchParams.get(prop),
+            });
+            console.log(params.student_list)
+            let indices = decodeURIComponent(atob(params.student_list)).split(",")
+
+            indices.sort(() => Math.random() - 0.5)
+
+            for (let i = 0; i < 20; i++) {
+                class_group[i].innerHTML = indices[i]
+            }
+        }
+
+        initialize()
+
+        shuffle()
+    </script>
+</body>
+</html>
