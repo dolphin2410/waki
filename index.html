@@ -17,7 +17,7 @@
             align-items: center;
             justify-content: center;
             flex-direction: column;
-            background-color: rgba(226, 248, 229, 0.822);
+            background: linear-gradient(#f05353, #555fd4);;
             min-width: 700px;
         }
 
@@ -75,7 +75,7 @@
             const params = new Proxy(new URLSearchParams(window.location.search), {
                 get: (searchParams, prop) => searchParams.get(prop),
             });
-            console.log(params.student_list)
+
             let indices = decodeURIComponent(atob(params.student_list)).split(",")
 
             indices.sort(() => Math.random() - 0.5)
